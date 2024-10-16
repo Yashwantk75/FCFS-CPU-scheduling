@@ -31,10 +31,10 @@ export default function ProcessDetail({ id, addProcess }) {
 
 
 
-            <div className="addIoCpu">
+            {/* <div className="addIoCpu">
                 <button className='addIo' onClick={addIo}>+</button>
                 <button className='addIo' onClick={subIo}>-</button>
-            </div>
+            </div> */}
             <button onClick={handleClick}>Add process</button>
         </Container>
     )

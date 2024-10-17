@@ -21,6 +21,14 @@ export default function Fcfs() {
         });
     }
 
+    function resetAll() {
+        addqueue([]);
+        setProcessInputs([]);
+        setProcessArray([[]]);
+        setVisible(false);
+        inputCount.current.value = "";
+        cstimeRef.current.value = "";
+    }
 
     function handleClick() {
         const array = [];
@@ -33,7 +41,7 @@ export default function Fcfs() {
 
     function compute() {
         const cstime = parseInt(cstimeRef.current.value);
-        if (cstime < 0) { alert("Enter valid context switch time"); return; }
+        if (cstime < 0 || isNaN(cstime)) { alert("Enter valid context switch time"); return; }
         queue.sort((a, b) => a.Arrival - b.Arrival);
         console.log(queue);
         const arrayOfProcesses = [
@@ -69,7 +77,9 @@ export default function Fcfs() {
             startDate = startTime;
             endDate = startTime + cstime;
             startTime += cstime
-            if (ind < arrayOfProcesses.length - 1) {
+            if (ind < (queue.length - 1)) {
+                console.log(ind < (arrayOfProcesses.length - 1));
+
                 arrayOfProcesses.push([
                     "CS",
                     "CS",
@@ -107,6 +117,7 @@ export default function Fcfs() {
                 <input type='number' min={0} autoComplete='off' id='context-switch-time' ref={cstimeRef}></input>
             </div>
             <button className='btn btn-primary calculate' onClick={compute}>Calculate</button>
+            <button className="btn btn-primary reset" onClick={resetAll}>Reset</button>
             {processArray.length > 0 && <div className={visible ? "" : "hide"}><Chart
                 chartType="Timeline"
                 data={processArray}
@@ -148,6 +159,9 @@ const Container = styled.div`
     }
     .calculate{
         margin: 10px 0;
+    }
+    .reset{
+        margin-left: 5px;
     }
     .chart-container{
         overflow-x: auto;
